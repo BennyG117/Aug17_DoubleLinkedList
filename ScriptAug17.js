@@ -39,11 +39,11 @@ class DoublyLinkedList {
   }
 
   /**
-* Determines if this list is empty.
-* - Time: O(1) constant.
-* - Space: O(1) constant.
-* @returns {boolean} Indicates if this list is empty.
-*/
+   * Determines if this list is empty.
+   * - Time: O(1) constant.
+   * - Space: O(1) constant.
+   * @returns {boolean} Indicates if this list is empty.
+   */
   isEmpty() {
     return this.head === null;
   }
@@ -56,22 +56,20 @@ class DoublyLinkedList {
    * @returns {DoublyLinkedList} This list.
    */
   insertAtFront(data) {
-  const newHead = new DLLNode(data);
+    const newHead = new DLLNode(data);
 
-  if (this.isEmpty()) {
-    this.head = newHead;
-    this.tail = newHead;
-  } else {
-    const oldHead = this.head;
-    oldHead.prev = newHead;
-    newHead.next = oldHead;
+    if (this.isEmpty()) {
+      this.head = newHead;
+      this.tail = newHead;
+    } else {
+      const oldHead = this.head;
+      oldHead.prev = newHead;
+      newHead.next = oldHead;
 
-    this.head = newHead;
+      this.head = newHead;
+    }
+    return this;
   }
-  return this;
-}
-
-
 
   /**
    * Creates a new node and adds it at the back of this list.
@@ -83,19 +81,17 @@ class DoublyLinkedList {
   insertAtBack(data) {
     let newNode = new DLLNode(data);
     if (this.isEmpty()) {
-        this.head = newNode;
-        this.tail = newNode;
-        return this
+      this.head = newNode;
+      this.tail = newNode;
+      return this;
     }
     let newTail = newNode;
     this.tail.next = newTail;
     newTail.prev = this.tail;
     this.tail = newTail;
-    return this
+    return this;
   }
-    
 
-//!====================== 8/17/23 ========================
 
   // EXTRA
   /**
@@ -104,7 +100,33 @@ class DoublyLinkedList {
    * - Space: O(?).
    * @returns {any} The data of the removed node.
    */
-  removeMiddleNode() { }
+  removeMiddleNode() {
+    if (this.isEmpty()) return null
+    let length = 0, runner = this.head;
+    while (runner != null) {
+        length++;
+        runner = runner.next;
+    }
+    // if length of list is even, no middle
+    // console.log(`Length: ${length}`);
+    if (length % 2 == 0 || length == 1) {
+        return null
+    }
+    runner = this.head;
+    let stop = Math.floor(length/2);
+    length = 0;
+    // console.log(`stop: ${stop}`);
+    while (length < stop - 1){
+      length++;
+      runner = runner.next;
+      // console.log(runner.data);
+    }
+    let result = runner.next.data;
+    runner.next = runner.next.next;
+    return result;
+  }
+  
+  //! ===========================================================
 
   /**
    * Converts this list to an array of the node's data.
@@ -136,32 +158,49 @@ class DoublyLinkedList {
 
 const emptyList = new DoublyLinkedList();
 
-
-//! Insert at front test:
-
-const triNodeList = new DoublyLinkedList().insertAtFront(1).insertAtFront(2).insertAtFront(3).insertAtFront(4).insertAtFront(5)
-console.log(" ==================== INSERT AT FRONT TEST =====================");
+const triNodeList = new DoublyLinkedList()
+  .insertAtFront(1)
+  .insertAtFront(2)
+  .insertAtFront(3)
+  .insertAtFront(4)
+  .insertAtFront(5);
+console.log(" ==================== INSERT AT FRONT TEST ====================");
 console.log(triNodeList.toArray());
 
-
-const triNodeList2 = new DoublyLinkedList().insertAtBack(1).insertAtBack(2).insertAtBack(3).insertAtBack(4).insertAtBack(5)
-console.log(" ==================== INSERT AT BACK TEST =====================");
+const triNodeList2 = new DoublyLinkedList()
+  .insertAtBack(1)
+  .insertAtBack(2)
+  .insertAtBack(3)
+  .insertAtBack(4)
+  .insertAtBack(5);
+console.log(" ==================== INSERT AT BACK TEST ====================");
 console.log(triNodeList2.toArray());
 
-
+const triNodeList3 = new DoublyLinkedList()
+  .insertAtBack(1)
+  .insertAtBack(2)
+  .insertAtBack(3)
+  .insertAtBack(4)
+  .insertAtBack(5);
+console.log(" ================= Removed Middle Node TEST ==================");
+console.log("before:");
+console.log(triNodeList3.toArray());
+console.log(triNodeList3.removeMiddleNode());
+console.log("after:");
+console.log(triNodeList3.toArray());
 
 /**************** Uncomment these test lists after insertAtBack is created. ****************/
-  // const singleNodeList = new DoublyLinkedList().insertAtBack(1);
-  // const biNodeList = new DoublyLinkedList().insertAtBack(1).insertAtBack(2);
-  // const firstThreeList = new DoublyLinkedList().insertAtBackMany([1, 2, 3]);
-  // const secondThreeList = new DoublyLinkedList().insertAtBackMany([4, 5, 6]);
-  // const unorderedList = new DoublyLinkedList().insertAtBackMany([
-  //   -5,
-  //   -10,
-  //   4,
-  //   -3,
-  //   6,
-  //   1,
-  //   -7,
-  //   -2,
-  // ]);
+// const singleNodeList = new DoublyLinkedList().insertAtBack(1);
+// const biNodeList = new DoublyLinkedList().insertAtBack(1).insertAtBack(2);
+// const firstThreeList = new DoublyLinkedList().insertAtBackMany([1, 2, 3]);
+// const secondThreeList = new DoublyLinkedList().insertAtBackMany([4, 5, 6]);
+// const unorderedList = new DoublyLinkedList().insertAtBackMany([
+//   -5,
+//   -10,
+//   4,
+//   -3,
+//   6,
+//   1,
+//   -7,
+//   -2,
+// ]);
