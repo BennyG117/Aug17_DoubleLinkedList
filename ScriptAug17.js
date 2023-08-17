@@ -21,6 +21,7 @@ class DLLNode {
     this.next = null;
   }
 }
+//!====================== 8/17/23 ========================
 /**
  * A class to represent a doubly linked list and contain all of it's methods.
  * A doubly linked list is a singly linked list that can be traversed in both
@@ -33,6 +34,8 @@ class DoublyLinkedList {
    */
   constructor() {
     // TODO: implement the constructor.
+    this.head = null;
+    this.tail = null;
   }
 
   /**
@@ -52,7 +55,23 @@ class DoublyLinkedList {
    * @param {any} data The data for the new node.
    * @returns {DoublyLinkedList} This list.
    */
-  insertAtFront(data) { }
+  insertAtFront(data) {
+  const newHead = new DLLNode(data);
+
+  if (this.isEmpty()) {
+    this.head = newHead;
+    this.tail = newHead;
+  } else {
+    const oldHead = this.head;
+    oldHead.prev = newHead;
+    newHead.next = oldHead;
+
+    this.head = newHead;
+  }
+  return this;
+}
+
+
 
   /**
    * Creates a new node and adds it at the back of this list.
@@ -61,7 +80,22 @@ class DoublyLinkedList {
    * @param {any} data The data for the new node.
    * @returns {DoublyLinkedList} This list.
    */
-  insertAtBack(data) { }
+  insertAtBack(data) {
+    let newNode = new DLLNode(data);
+    if (this.isEmpty()) {
+        this.head = newNode;
+        this.tail = newNode;
+        return this
+    }
+    let newTail = newNode;
+    this.tail.next = newTail;
+    newTail.prev = this.tail;
+    this.tail = newTail;
+    return this
+  }
+    
+
+//!====================== 8/17/23 ========================
 
   // EXTRA
   /**
@@ -101,6 +135,20 @@ class DoublyLinkedList {
 }
 
 const emptyList = new DoublyLinkedList();
+
+
+//! Insert at front test:
+
+const triNodeList = new DoublyLinkedList().insertAtFront(1).insertAtFront(2).insertAtFront(3).insertAtFront(4).insertAtFront(5)
+console.log(" ==================== INSERT AT FRONT TEST =====================");
+console.log(triNodeList.toArray());
+
+
+const triNodeList2 = new DoublyLinkedList().insertAtBack(1).insertAtBack(2).insertAtBack(3).insertAtBack(4).insertAtBack(5)
+console.log(" ==================== INSERT AT BACK TEST =====================");
+console.log(triNodeList2.toArray());
+
+
 
 /**************** Uncomment these test lists after insertAtBack is created. ****************/
   // const singleNodeList = new DoublyLinkedList().insertAtBack(1);
